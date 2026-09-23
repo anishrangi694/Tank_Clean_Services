@@ -47,6 +47,27 @@ export const loginUser= async(req,res)=>{
     }
 }
 
+export const logoutUser= async (req,res)=>{
+    try{
+        res.clearCookie("authToken",{
+            httpOnly:true,
+            secure:false
+        });
+
+        res.status(201).json({
+            message:"logout successfully from account",
+            error:{},
+            success:true
+        })
+    }catch(error){
+        res.status(401).json({
+            message:"user not logged Out",
+            error:error.message,
+            success:false
+        })
+    }
+}
+
 export const getUser= async(req,res)=>{
     try{
         const user= await getUserDetails(req.user.email);
