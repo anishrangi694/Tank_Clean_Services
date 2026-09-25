@@ -8,6 +8,7 @@ export const createReqRepo= async (reqDetails)=>{
         return request;
     }catch(error){
         console.log('request not created at repo',error);
+        throw error;
     }
 }
 

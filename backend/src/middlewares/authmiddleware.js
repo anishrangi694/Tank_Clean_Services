@@ -5,7 +5,7 @@ export const isLoggedIn=  (req,res,next)=>{
     const token= req.cookies.authToken;
 
     if(!token){
-        res.status(401).json({
+        return res.status(401).json({
             message:'please login first',
             success:false,
         })

@@ -1,6 +1,7 @@
 import { createReqService, getMyReqService, getReqService, getRequestsService, updateStatusService } from "../service/requestService.js";
 
 export const createRequest= async (req,res)=>{
+    console.log("hitting controller")
     try{
         const imageUrl= req.file?.path;
         const response= await createReqService({

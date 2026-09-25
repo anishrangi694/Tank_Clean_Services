@@ -1,7 +1,8 @@
+import crypto from "crypto";
 import Razorpay from 'razorpay';
 import { RAZORPAY_API_KEY, RAZORPAY_API_SECRET } from '../config/serverConfig.js';
 import { getPaymentByReqRepo, updatePaymentByIdRepo } from '../repository/paymentRepo.js';
-import { request } from 'express';
+import request from "../schema/requestSchema.js";
 
 const razorpay= new Razorpay({
     key_id:RAZORPAY_API_KEY,
@@ -30,7 +31,6 @@ const verifySignature= (orderId,paymentId,signature)=>{
     return signature===expectedSign;
 }
 
-
 //--------Verify Booking Payment---------
 
 export const verifyBookingPaymentService= async (data)=>{
@@ -48,15 +48,25 @@ export const verifyBookingPaymentService= async (data)=>{
     }
 
     const payment= await updatePaymentByIdRepo(paymentId,{
-        paymentStatus:"Paid",
-        razorpayPaymentId:razorpay_payment_id,
-        paidAt:new Date()
-    });
+    paymentStatus:"Paid",
+    razorpayPaymentId:razorpay_payment_id,
+    paidAt:new Date()
+});
 
-    if(!payment){
-        request.status="Confirmed";
-        await request.save();
+console.log("PAYMENT AFTER UPDATE:", payment);
+
+if(payment){
+    const requestData= await request.findById(payment.request);
+
+    console.log("REQUEST FOUND:", requestData);
+
+    if(requestData){
+        requestData.status="Confirmed";
+        await requestData.save();
+
+        console.log("REQUEST STATUS UPDATED:", requestData.status);
     }
+}
 
     return payment;
 }

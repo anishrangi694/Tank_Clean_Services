@@ -40,22 +40,38 @@ export const getPaymentByRazorPayOrderIDRepo= async (orderId)=>{
     }
 }
 
-export const updatePaymentByIdRepo= async (paymentId,data)=>{
-    try{
-        const payment= await Payment.findByIdAndUpdate(paymentId,data,{new:true});
-        return payment;
-    }catch(error){
-        console.log("payment not updated by paymentId at repo");
-        console.log(error);
-    }
-}
+export const updatePaymentByIdRepo = async (paymentId, data) => {
+    try {
+        const payment = await Payment.findByIdAndUpdate(
+            paymentId,
+            data,
+            {
+                returnDocument: "after"
+            }
+        );
 
-export const updatePaymentByRazorpayOrderIdRepo= async (orderId,data)=>{
-    try{
-        const payment= await Payment.findByIdAndUpdate({razorpayOrderId:orderId},data,{new:true});
         return payment;
-    }catch(error){
+    } catch (error) {
         console.log("payment not updated by paymentId at repo");
-        console.log(error);
+        throw error;
     }
-}
+};
+
+export const updatePaymentByRazorpayOrderIdRepo = async (orderId, data) => {
+    try {
+        const payment = await Payment.findOneAndUpdate(
+            { razorpayOrderId: orderId },
+            data,
+            {
+                returnDocument: "after"
+            }
+        );
+
+        return payment;
+
+    } catch (error) {
+        console.log("payment not updated by Razorpay orderId at repo");
+        console.log(error);
+        throw error;
+    }
+};

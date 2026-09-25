@@ -4,10 +4,10 @@ import { isAdmin, isLoggedIn } from '../middlewares/authmiddleware.js';
 import upload from '../middlewares/multer.js';
 
 const reqRouter= express.Router();
-
 //user routes
-reqRouter.post('/add',isLoggedIn, upload.single('image'),createRequest);
+reqRouter.post('/add',isLoggedIn,upload.single('image'),createRequest);
 reqRouter.get('/my',isLoggedIn,getMyRequest);
+
 
 //admin routes
 reqRouter.get('/',isLoggedIn,isAdmin, getRequests);
