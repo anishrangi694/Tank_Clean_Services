@@ -1,9 +1,11 @@
-
 import tankClean from "../assets/tankClean.jpg";
 import CompanyDetails from "../Components/compnayDetails";
 import ChooseInfo from "../Components/ChooseInfo";
+import { Link } from "react-router-dom";
 
 function About() {
+
+
   return (
     <div className="bg-gray-200 ">
       {/* Hero Section */}
@@ -51,12 +53,12 @@ function About() {
             cleaner water storage.
           </p>
 
-          <a
-            href="/"
+          <Link
+            to="/register"
             className="inline-block bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100"
           >
             Book Now
-          </a>
+          </Link>
         </div>
       </section>
     </div>

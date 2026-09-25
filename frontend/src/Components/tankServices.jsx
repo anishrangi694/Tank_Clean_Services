@@ -3,8 +3,15 @@ import septic from "../assets/septic.jpg";
 import other from "../assets/other.jpg";
 import ugTank from "../assets/ugTank.jpg";
 import waterTank from "../assets/waterTank.jpg";
+import { useNavigate } from "react-router-dom";
 
 function TankService(){
+  const navigate= useNavigate()
+
+    const handleClick= ()=>{
+       navigate('/register')
+    }
+    
     const services = [
     {
       title: "Water Tank",
@@ -106,6 +113,8 @@ function TankService(){
               hover:scale-[1.03]
               hover:shadow-lg
               active:scale-95"
+
+              onClick={handleClick}
                   >
                     Book Service
                   </button>

@@ -1,8 +1,12 @@
-
+import { useNavigate } from "react-router-dom";
 import TankService from "../Components/tankServices";
 
 function Services() {
-  
+  const navigate= useNavigate()
+
+    const handleClick= ()=>{
+       navigate('/register')
+    }
 
   return (
     <div className="min-h-screen bg-white">
@@ -44,7 +48,7 @@ function Services() {
             Choose your tank type and book a professional cleaning service.
           </p>
 
-          <button className="bg-white text-blue-600 font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition">
+          <button onClick={handleClick} className="bg-white text-blue-600 font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition">
             Book Now
           </button>
         </div>

@@ -8,6 +8,7 @@ import Login from "./Pages/login";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import TankCleaningForm from "./Pages/requestForm";
+import ScrollToTop from "./Components/scrollToTop";
 
 function App() {
   const location = useLocation();
@@ -17,7 +18,9 @@ function App() {
     location.pathname === "/register";
 
   return (
+
     <>
+    <ScrollToTop/>
       <Navbar />
 
       <Routes>
