@@ -124,17 +124,13 @@ return (
 
       {/* Header */}
       <div className="mb-6 text-center">
-        <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-blue-100 text-2xl">
-          💧
-        </div>
+        
 
         <h1 className="text-3xl font-bold text-slate-800">
           Tank Cleaning Service
         </h1>
 
-        <p className="mt-2 text-sm text-slate-500">
-          Book a professional tank cleaning service
-        </p>
+        
       </div>
 
       {/* Form Card */}

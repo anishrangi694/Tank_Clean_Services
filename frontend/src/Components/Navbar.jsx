@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { FaCircleUser } from "react-icons/fa6";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -99,14 +100,27 @@ const Navbar = () => {
       </div>
 
       {/* Desktop Authentication - Right */}
-      <div className="hidden lg:flex items-center gap-4 ml-auto mr-16">
+      {/* Desktop Authentication - Right */}
+<div className="hidden lg:flex items-center gap-5 ml-auto mr-16">
   {user ? (
-    <button
-      onClick={handleLogout}
-      className="rounded-md border  border-blue-600 text-blue-600  hover:bg-blue-600 hover:text-white px-4 py-2"
-    >
-      Logout
-    </button>
+    <>
+      {/* User Icon */}
+      <button
+        onClick={() => navigate("/dashboard")}
+        className="text-gray-700 hover:text-blue-600 transition mr-16"
+        title="My Profile"
+      >
+        <FaCircleUser className="text-4xl" />
+      </button>
+
+      {/* Logout */}
+      <button
+        onClick={handleLogout}
+        className="rounded-md border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-4 py-2"
+      >
+        Logout
+      </button>
+    </>
   ) : (
     <>
       <Link

@@ -5,7 +5,7 @@ function Services() {
   const navigate= useNavigate()
 
     const handleClick= ()=>{
-       navigate('/register')
+       navigate('/request')
     }
 
   return (

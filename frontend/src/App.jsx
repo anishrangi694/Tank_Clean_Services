@@ -9,13 +9,16 @@ import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import TankCleaningForm from "./Pages/requestForm";
 import ScrollToTop from "./Components/scrollToTop";
+import Dashboard from "./Pages/dashboard";
+import Register from "./Pages/register";
 
 function App() {
   const location = useLocation();
 
   const hideFooter =
     location.pathname === "/login" ||
-    location.pathname === "/register";
+    location.pathname === "/register" ||
+    location.pathname ==='dashboard';
 
   return (
 
@@ -29,7 +32,9 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<TankCleaningForm />} />
+        <Route path="/request" element={<TankCleaningForm />} />
+        <Route path="/register" element={<Register />} />
+        <Route path='/dashboard' element={<Dashboard/>}/>
       </Routes>
 
       {!hideFooter && <Footer />}

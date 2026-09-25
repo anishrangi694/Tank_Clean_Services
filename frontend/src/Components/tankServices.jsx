@@ -9,9 +9,9 @@ function TankService(){
   const navigate= useNavigate()
 
     const handleClick= ()=>{
-       navigate('/register')
+       navigate('/request')
     }
-    
+
     const services = [
     {
       title: "Water Tank",
