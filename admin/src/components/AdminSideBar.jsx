@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const AdminSidebar = () => {
   return (
-    <aside className="w-64 min-h-[calc(100vh-90px)] bg-white border-r border-gray-200 shadow-sm">
+    <aside className="fixed left-0 top-[90px] z-40 w-64 h-[calc(100vh-90px)] bg-white border-r border-gray-200 shadow-sm">
       
       {/* Sidebar Top */}
       <div className="px-6 py-6 border-b border-gray-100">
@@ -63,7 +63,7 @@ const AdminSidebar = () => {
       </div>
 
       {/* Bottom Info */}
-      <div className="absolute bottom-5 w-64 px-4">
+      <div className="absolute bottom-5 left-0 w-full px-4">
         <div className="bg-gray-50 border border-gray-100 rounded-xl p-4">
           <p className="text-xs font-semibold text-gray-700">
             Admin Access

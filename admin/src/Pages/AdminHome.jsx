@@ -183,7 +183,7 @@ const AdminHome = () => {
                       </td>
 
                       <td className="px-6 py-4 text-sm text-gray-600">
-                        {request.preferredDate}
+                         {new Date(request.preferredDate).toLocaleDateString("en-IN")}
                       </td>
 
                       <td className="px-6 py-4">

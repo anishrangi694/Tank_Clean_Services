@@ -1,38 +1,73 @@
-import { Routes, Route } from 'react-router-dom'
-import './App.css'
-import AdminNavbar from './components/Navbar'
-import AdminLogin from './Pages/AdminLogin'
-import AdminHome from './Pages/AdminHome'
-import AdminSidebar from './components/AdminSideBar'
+import { Routes, Route, Navigate } from "react-router-dom";
+
+import Navbar from "./components/Navbar";
+import AdminSideBar from "./components/AdminSideBar";
+
+import AdminLogin from "./Pages/AdminLogin";
+import AdminHome from "./Pages/AdminHome";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminRequests from "./Pages/AdminRequests";
 
 function App() {
-
   return (
     <>
-      <AdminNavbar/>
-      <div className="flex">
-  <AdminSidebar />
+      {/* Navbar is always visible */}
+      <Navbar />
 
-  <main className="flex-1 bg-gray-50 min-h-[calc(100vh-90px)] p-0">
-    <Routes>
-      <Route path="/login" element={<AdminLogin />} />
-      <Route path="/" element={<AdminHome />} />
+      <Routes>
 
-      <Route
-        path="/requests"
-        element={
-          <div className="p-8">
-            <h1 className="text-2xl font-bold text-gray-800">
-              Requests
-            </h1>
-          </div>
-        }
-      />
-    </Routes>
-  </main>
-</div>
+        {/* Login */}
+        <Route
+          path="/login"
+          element={<AdminLogin />}
+        />
+
+        {/* Dashboard */}
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <div className="h-screen overflow-hidden">
+
+                <AdminSideBar />
+
+                <main className="fixed top-[90px] left-64 right-0 bottom-0 overflow-y-auto bg-gray-50">
+                  <AdminHome />
+                </main>
+
+              </div>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Requests */}
+        <Route
+          path="/requests"
+          element={
+            <ProtectedRoute>
+              <div className="h-screen overflow-hidden">
+
+                <AdminSideBar />
+
+                <main className="fixed top-[90px] left-64 right-0 bottom-0 overflow-y-auto bg-gray-50">
+                  <AdminRequests />
+                </main>
+
+              </div>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Wrong URL */}
+        <Route
+          path="*"
+          element={<Navigate to="/login" replace />}
+        />
+
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
+

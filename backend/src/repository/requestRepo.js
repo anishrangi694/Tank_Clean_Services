@@ -12,24 +12,29 @@ export const createReqRepo= async (reqDetails)=>{
     }
 }
 
-export const getMyReqRepo= async (userId)=>{
-    try{
-        const request= await Request.find({user:userId});
-        return request;
-    }catch(error){
-        console.log("request is not fetched at repo layer");
-        throw error;
-    }
-}
+export const getMyReqRepo = async (userId) => {
+  try {
+    const request = await Request.find({ user: userId })
+      .sort({ createdAt: -1 });
 
-export const getRequestsRepo= async ()=>{
-    try{
-        const requests= await Request.find();
-        return requests;
-    }catch(error){
-        throw error;
-    }
-}
+    return request;
+  } catch (error) {
+    console.log("request is not fetched at repo layer");
+    throw error;
+  }
+};
+
+export const getRequestsRepo = async () => {
+  try {
+    const requests = await Request.find()
+      .populate("user", "name email mobileNumber")
+      .sort({ createdAt: -1 });
+
+    return requests;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const updateStatusRepo= async (reqId,updates)=>{
     try{
