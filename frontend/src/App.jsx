@@ -11,6 +11,7 @@ import TankCleaningForm from "./Pages/requestForm";
 import ScrollToTop from "./Components/scrollToTop";
 import Dashboard from "./Pages/dashboard";
 import Register from "./Pages/register";
+import EquipmentChemicals from "./Pages/EquipmentChemicals";
 
 function App() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function App() {
         <Route path="/request" element={<TankCleaningForm />} />
         <Route path="/register" element={<Register />} />
         <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route path="/equipment-chemicals" element={<EquipmentChemicals />}/>
       </Routes>
 
       {!hideFooter && <Footer />}

@@ -53,7 +53,6 @@ export const verifyBookingPaymentService= async (data)=>{
     paidAt:new Date()
 });
 
-console.log("PAYMENT AFTER UPDATE:", payment);
 
 if(payment){
     const requestData= await request.findById(payment.request);

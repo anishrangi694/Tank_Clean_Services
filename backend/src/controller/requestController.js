@@ -1,35 +1,39 @@
 import { createReqService, getMyReqService, getReqService, getRequestsService, updateStatusService } from "../service/requestService.js";
 
-export const createRequest= async (req,res)=>{
-    console.log("hitting controller")
-    try{
-        const imageUrl= req.file?.path;
-        const response= await createReqService({
-            user:req.user.id,
-            tankType:req.body.tankType,
-            tankSize:req.body.tankSize,
-            address:req.body.address,
-            contact:req.body.contact,
-            preferredDate:req.body.preferredDate,
-            notes:req.body.notes,
-            image:imageUrl,
-        })        
+export const createRequest = async (req, res) => {
+  try {
+    const imageUrl = req.file?.path;
 
-        res.status(201).json({
-            message:"request is initiate successfully",
-            data:response,
-            error:{},
-            success:true
-        })
-    }catch(error){
-        res.status(500).json({
-            message:"request is not initiated",
-            data:{},
-            error:error.message,
-            success:false
-        })
-    }
-}
+    const response = await createReqService({
+      user: req.user.id,
+      tankType: req.body.tankType,
+      tankSize: req.body.tankSize,
+      address: req.body.address,
+      city: req.body.city,
+      pincode: req.body.pincode,
+      contact: req.body.contact,
+      preferredDate: req.body.preferredDate,
+      notes: req.body.notes,
+      image: imageUrl,
+    });
+
+    return res.status(201).json({
+      message: "Request initiated successfully",
+      data: response,
+      error: {},
+      success: true,
+    });
+  } catch (error) {
+    console.error("Create request error:", error);
+
+    return res.status(500).json({
+      message: "Request could not be initiated",
+      data: {},
+      error: error.message,
+      success: false,
+    });
+  }
+};
 
 export const getMyRequest= async (req,res)=>{
     try{

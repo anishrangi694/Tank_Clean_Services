@@ -11,9 +11,7 @@ export const findUserRepo= async (email)=>{
 
 export const addUserRepo= async (userDetails)=>{
     try{
-        console.log(userDetails)
         const user= await User.create(userDetails);
-        console.log("user is:",user)
         return user;
     }catch(error){
         console.log("user not created at repo layer",error);

@@ -5,14 +5,14 @@ import ugTank from "../assets/ugTank.jpg";
 import waterTank from "../assets/waterTank.jpg";
 import { useNavigate } from "react-router-dom";
 
-function TankService(){
-  const navigate= useNavigate()
+function TankService() {
+  const navigate = useNavigate();
 
-    const handleClick= ()=>{
-       navigate('/request')
-    }
+  const handleClick = () => {
+    navigate("/request");
+  };
 
-    const services = [
+  const services = [
     {
       title: "Water Tank",
       description:
@@ -45,15 +45,15 @@ function TankService(){
     },
   ];
 
-    return (
-        <>
-            <section className="py-16 px-6 bg-gray-50">
+  return (
+    <>
+      <section className="py-16 px-6 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           {/* Heading */}
           <h2
             className="text-3xl md:text-4xl font-bold text-center mb-12
-      transition-all duration-500
-      hover:text-orange-500 hover:scale-105"
+                        transition-all duration-500
+                       hover:text-orange-500 hover:scale-105"
           >
             Choose Your Tank Type
           </h2>
@@ -81,8 +81,8 @@ function TankService(){
                   {/* Image Overlay */}
                   <div
                     className="absolute inset-0 bg-black/0
-              transition-all duration-500
-              group-hover:bg-black/10"
+                               transition-all duration-500
+                              group-hover:bg-black/10"
                   />
                 </div>
 
@@ -90,9 +90,9 @@ function TankService(){
                 <div className="p-6">
                   <h3
                     className="text-2xl font-bold mb-3
-              transition-all duration-500
-              group-hover:text-orange-500
-              group-hover:translate-x-1"
+                                transition-all duration-500
+                              group-hover:text-orange-500
+                                 group-hover:translate-x-1"
                   >
                     {service.title}
                   </h3>
@@ -113,8 +113,7 @@ function TankService(){
               hover:scale-[1.03]
               hover:shadow-lg
               active:scale-95"
-
-              onClick={handleClick}
+                    onClick={handleClick}
                   >
                     Book Service
                   </button>
@@ -124,8 +123,8 @@ function TankService(){
           </div>
         </div>
       </section>
-        </>
-    )
+    </>
+  );
 }
 
 export default TankService;

@@ -1,20 +1,19 @@
-function CompanyDetails(){
-
-    return (
-        <>
-            <section className="py-16 px-6 bg-white">
+function CompanyDetails() {
+  return (
+    <>
+      <section className="py-16 px-6 bg-white">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           {/* Who We Are */}
           <div
             className="group cursor-pointer rounded-2xl p-6
-      transition-all duration-500 ease-in-out
-      hover:-translate-y-3 hover:scale-[1.03]
-      hover:bg-gray-50 hover:shadow-xl"
+                       transition-all duration-500 ease-in-out
+                       hover:-translate-y-3 hover:scale-[1.03]
+                       hover:bg-gray-50 hover:shadow-xl"
           >
             <h2
               className="text-3xl font-bold text-gray-800 mb-5
-        transition-all duration-500
-        group-hover:text-orange-500 group-hover:translate-x-2"
+                         transition-all duration-500
+                        group-hover:text-orange-500 group-hover:translate-x-2"
             >
               Who We Are
             </h2>
@@ -47,15 +46,15 @@ function CompanyDetails(){
                        hover:-translate-y-3 hover:scale-[1.03]
                        hover:shadow-2xl hover:border-orange-200"
           >
-          <h3
+            <h3
               className="text-2xl font-semibold text-gray-800 mb-4
                          transition-all duration-500
                        group-hover:text-orange-500 group-hover:translate-x-2"
             >
               Our Mission
-          </h3>
+            </h3>
 
-          <p
+            <p
               className="text-gray-600 leading-7
                           transition-all duration-500
                           group-hover:text-gray-800"
@@ -67,8 +66,8 @@ function CompanyDetails(){
           </div>
         </div>
       </section>
-        </>
-    )
+    </>
+  );
 }
 
 export default CompanyDetails;

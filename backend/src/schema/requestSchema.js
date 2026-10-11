@@ -1,80 +1,102 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const requestSchema= new mongoose.Schema({
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required:true
+const requestSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
 
-    tankType:{
-        type:String,
-        enum:["Water Tank", "Overhead Tank", "Underground Tank", "Septic Tank", "Other"],
-        required:[true,'Tank type is required']
+    tankType: {
+      type: String,
+      enum: [
+        "Water Tank",
+        "Overhead Tank",
+        "Underground Tank",
+        "Septic Tank",
+        "Other",
+      ],
+      required: [true, "Tank type is required"],
     },
 
-    tankSize:{
-        type:String,
-        enum: ["Small", "Medium", "Large", "Extra Large"],
-        required:[true,'Tank Size is required']
+    tankSize: {
+      type: String,
+      enum: ["Small", "Medium", "Large", "Extra Large"],
+      required: [true, "Tank Size is required"],
     },
 
-    address:{
-        type:String,
-        required:[true,'address is required'],
-        trim:true
+    address: {
+      type: String,
+      required: [true, "address is required"],
+      trim: true,
     },
 
-    contact:{
-        type:String,
-        trim:true,
-        unique:false,
-        match: [/^\d{10}$/, "Mobile number must be exactly 10 digits"],
+    city: {
+      type: String,
+      required: true,
+      trim: true,
+      default: "Jodhpur",
     },
 
-    preferredDate:{
-        type:Date,
-        required:[true, 'preferred date is required']
+    pincode: {
+      type: String,
+      required: [true, "PIN code is required"],
+      match: [/^\d{6}$/, "PIN code must contain exactly six digits"],
+      trim: true,
     },
 
-    notes:{
-        type:String,
-        trim:true,
-        maxlength:[300,"notes should in 300 words"]
+    contact: {
+      type: String,
+      trim: true,
+      unique: false,
+      match: [/^\d{10}$/, "Mobile number must be exactly 10 digits"],
     },
 
-    image:{
-        type:String,
-        default:null
+    preferredDate: {
+      type: Date,
+      required: [true, "preferred date is required"],
     },
 
-    estimatePrice:{
-        type:Number,
-        default:0
+    notes: {
+      type: String,
+      trim: true,
+      maxlength: [300, "notes should in 300 words"],
     },
 
-    status:{
-        type:String,
-        enum:["Pending","Confirmed", "In Progress", "Completed", "Cancelled"],
-        default:"Pending"
+    image: {
+      type: String,
+      default: null,
     },
 
-    adminNote:{
-        type:String,
-        trim:true,
-        default:""
+    estimatePrice: {
+      type: Number,
+      default: 0,
     },
 
-    payment:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Payment",
-        default:null
-    }
+    status: {
+      type: String,
+      enum: ["Pending", "Confirmed", "In Progress", "Completed", "Cancelled"],
+      default: "Pending",
+    },
 
-},{
-    timestamps:true
-})
+    adminNote: {
+      type: String,
+      trim: true,
+      default: "",
+    },
 
-const Request= mongoose.model("Request",requestSchema);
+    payment: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Payment",
+      default: null,
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
+
+const Request = mongoose.model("Request", requestSchema);
 
 export default Request;

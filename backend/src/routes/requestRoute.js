@@ -2,10 +2,11 @@ import express from 'express';
 import { createRequest, getMyRequest,getRequests, updateRequests,getRequest } from '../controller/requestController.js';
 import { isAdmin, isLoggedIn } from '../middlewares/authmiddleware.js';
 import upload from '../middlewares/multer.js';
+import validateServiceArea from '../middlewares/validateServiceArea.js';
 
 const reqRouter= express.Router();
 //user routes
-reqRouter.post('/add',isLoggedIn,upload.single('image'),createRequest);
+reqRouter.post('/add',isLoggedIn,upload.single('image'), validateServiceArea,createRequest);
 reqRouter.get('/my',isLoggedIn,getMyRequest);
 
 
