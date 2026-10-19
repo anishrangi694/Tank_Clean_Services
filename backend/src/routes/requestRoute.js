@@ -6,7 +6,7 @@ import validateServiceArea from '../middlewares/validateServiceArea.js';
 
 const reqRouter= express.Router();
 //user routes
-reqRouter.post('/add',isLoggedIn,upload.single('image'), validateServiceArea,createRequest);
+reqRouter.post("/add",isLoggedIn,validateServiceArea,createRequest);
 reqRouter.get('/my',isLoggedIn,getMyRequest);
 
 

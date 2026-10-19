@@ -1,735 +1,508 @@
-// import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-
-// function TankCleaningForm(){
-//   const navigate= useNavigate()
-//   const [form, setForm] = useState({
-//     tankType: "",
-//     tankSize: "",
-//     address: "",
-//     contact: "",
-//     preferredDate: "",
-//     notes: "",
-//     image: null,
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value, files } = e.target;
-
-//     setForm({
-//       ...form,
-//       [name]: files ? files[0] : value,
-//     });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     const data = new FormData();
-
-//     data.append("tankType", form.tankType);
-//     data.append("tankSize", form.tankSize);
-//     data.append("address", form.address);
-//     data.append("contact", form.contact);
-//     data.append("preferredDate", form.preferredDate);
-//     data.append("notes", form.notes);
-
-//     if (form.image) {
-//       data.append("image", form.image);
-//     }
-
-//     try {
-//       const response = await fetch(
-//         "http://localhost:3000/requests/add",
-//         {
-//           method: "POST",
-//           credentials: "include",
-//           body: data,
-//         }
-//       );
-
-//       const result = await response.json();
-
-//       if (!response.ok) {
-//         alert(result.message);
-//         return;
-//       }
-
-//       const { order, payment } = result.data;
-
-//       const options = {
-//         key: order.key,
-//         amount: order.amount * 100,
-//         currency: order.currency,
-//         name: "Tank Clean Services",
-//         description: "Tank Cleaning Booking",
-//         order_id: order.orderId,
-
-//         handler: async (response) => {
-//           const verify = await fetch(
-//             "http://localhost:3000/payments/verify-booking",
-//             {
-//               method: "POST",
-//               credentials: "include",
-//               headers: {
-//                 "Content-Type": "application/json",
-//               },
-//               body: JSON.stringify({
-//                 razorpay_order_id: response.razorpay_order_id,
-//                 razorpay_payment_id: response.razorpay_payment_id,
-//                 razorpay_signature: response.razorpay_signature,
-//                 paymentId: payment._id,
-//               }),
-//             }
-//           );
-
-//           const result = await verify.json();
-
-//           if (result.success) { // Clear the form 
-//             setForm({ 
-//               tankType: "", 
-//               tankSize: "", 
-//               address: "", 
-//               contact: "", 
-//               preferredDate: "", 
-//               notes: "", 
-//               image: null, 
-//             }); 
-            
-//             // Go to success page 
-//             navigate("/"); 
-//           } else { // Remain on this page 
-//                      alert("Payment verification failed"); 
-//           }
-//         },
-//       };
-
-//       const razorpay = new window.Razorpay(options);
-
-//       razorpay.open();
-
-      
-
-//     } catch (error) {
-//       console.log(error);
-//       alert("Something went wrong");
-//     }
-//   };
-
- 
-
-// return (
-//   <div className="min-h-screen bg-slate-100 px-4 py-10">
-//     <div className="mx-auto max-w-2xl">
-
-//       {/* Header */}
-//       <div className="mb-6 text-center">
-        
-
-//         <h1 className="text-3xl font-bold text-slate-800">
-//           Tank Cleaning Service
-//         </h1>
-
-        
-//       </div>
-
-//       {/* Form Card */}
-//       <div className="overflow-hidden rounded-2xl bg-white shadow-lg">
-
-//         {/* Card Header */}
-//         <div className="bg-blue-600 px-6 py-5 text-white">
-//           <h2 className="text-xl font-semibold">
-//             Booking Details
-//           </h2>
-
-//           <p className="mt-1 text-sm text-blue-100">
-//             Enter your tank and contact information
-//           </p>
-//         </div>
-
-//         <form
-//           onSubmit={handleSubmit}
-//           className="space-y-5 p-6 sm:p-8"
-//         >
-
-//           {/* Tank Type & Size */}
-//           <div className="grid gap-5 sm:grid-cols-2">
-
-//             {/* Tank Type */}
-//             <div>
-//               <label className="mb-2 block text-sm font-semibold text-slate-700">
-//                 Tank Type
-//               </label>
-
-//               <select
-//                 name="tankType"
-//                 value={form.tankType}
-//                 onChange={handleChange}
-//                 required
-//                 className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-700 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-//               >
-//                 <option value="">Select tank type</option>
-//                 <option value="Water Tank">Water Tank</option>
-//                 <option value="Overhead Tank">Overhead Tank</option>
-//                 <option value="Underground Tank">Underground Tank</option>
-//                 <option value="Septic Tank">Septic Tank</option>
-//                 <option value="Other">Other</option>
-//               </select>
-//             </div>
-
-//             {/* Tank Size */}
-//             <div>
-//               <label className="mb-2 block text-sm font-semibold text-slate-700">
-//                 Tank Size
-//               </label>
-
-//               <select
-//                 name="tankSize"
-//                 value={form.tankSize}
-//                 onChange={handleChange}
-//                 required
-//                 className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-700 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-//               >
-//                 <option value="">Select tank size</option>
-//                 <option value="Small">Small</option>
-//                 <option value="Medium">Medium</option>
-//                 <option value="Large">Large</option>
-//                 <option value="Extra Large">Extra Large</option>
-//               </select>
-//             </div>
-
-//           </div>
-
-//           {/* Address */}
-//           <div>
-//             <label className="mb-2 block text-sm font-semibold text-slate-700">
-//               Service Address
-//             </label>
-
-//             <textarea
-//               name="address"
-//               value={form.address}
-//               onChange={handleChange}
-//               required
-//               rows="3"
-//               placeholder="Enter the complete address where the tank is located"
-//               className="w-full resize-none rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-//             />
-//           </div>
-
-//           {/* Contact & Date */}
-//           <div className="grid gap-5 sm:grid-cols-2">
-
-//             {/* Contact */}
-//             <div>
-//               <label className="mb-2 block text-sm font-semibold text-slate-700">
-//                 Contact Number
-//               </label>
-
-//               <input
-//                 type="tel"
-//                 name="contact"
-//                 value={form.contact}
-//                 onChange={handleChange}
-//                 required
-//                 placeholder="Enter phone number"
-//                 className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-//               />
-//             </div>
-
-//             {/* Date */}
-//             <div>
-//               <label className="mb-2 block text-sm font-semibold text-slate-700">
-//                 Preferred Date
-//               </label>
-
-//               <input
-//                 type="date"
-//                 name="preferredDate"
-//                 value={form.preferredDate}
-//                 onChange={handleChange}
-//                 required
-//                 className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-//               />
-//             </div>
-
-//           </div>
-
-//           {/* Notes */}
-//           <div>
-//             <label className="mb-2 block text-sm font-semibold text-slate-700">
-//               Additional Notes
-//               <span className="ml-2 font-normal text-slate-400">
-//                 (Optional)
-//               </span>
-//             </label>
-
-//             <textarea
-//               name="notes"
-//               value={form.notes}
-//               onChange={handleChange}
-//               rows="3"
-//               placeholder="Any special instructions or information..."
-//               className="w-full resize-none rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-//             />
-//           </div>
-
-//           {/* Image */}
-//           <div>
-//             <label className="mb-2 block text-sm font-semibold text-slate-700">
-//               Tank Image
-//               <span className="ml-2 font-normal text-slate-400">
-//                 (Optional)
-//               </span>
-//             </label>
-
-//             <div className="rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 p-5 text-center transition hover:border-blue-400 hover:bg-blue-50">
-//               <div className="mb-2 text-2xl">
-//                 📷
-//               </div>
-
-//               <p className="mb-2 text-sm text-slate-500">
-//                 Upload a photo of your tank
-//               </p>
-
-//               <input
-//                 type="file"
-//                 name="image"
-//                 accept="image/*"
-//                 onChange={handleChange}
-//                 className="mx-auto block w-full max-w-xs text-sm text-slate-500 file:mr-3 file:rounded-md file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-blue-700"
-//               />
-//             </div>
-//           </div>
-
-//           {/* Booking Fee */}
-//           <div className="flex items-center justify-between rounded-lg border border-blue-100 bg-blue-50 px-5 py-4">
-//             <div>
-//               <p className="font-semibold text-slate-700">
-//                 Booking Fee
-//               </p>
-
-//               <p className="text-xs text-slate-500">
-//                 Pay securely through Razorpay
-//               </p>
-//             </div>
-
-//             <span className="text-xl font-bold text-blue-600">
-//               ₹200
-//             </span>
-//           </div>
-
-//           {/* Submit */}
-//           <button
-//             type="submit"
-//             className="w-full rounded-lg bg-blue-600 py-3.5 font-semibold text-white shadow-sm transition hover:bg-blue-700 hover:shadow-md active:scale-[0.99]"
-//           >
-//             Book Tank Cleaning
-//           </button>
-
-//           <p className="text-center text-xs text-slate-400">
-//             Your booking will proceed to secure payment after submission.
-//           </p>
-
-//         </form>
-//       </div>
-//     </div>
-//   </div>
-// );
-
-
-
-// };
-
-// export default TankCleaningForm;
-
-
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function TankCleaningForm(){
-  const navigate= useNavigate()
-  const [form, setForm] = useState({
-    tankType: "",
-    tankSize: "",
-    address: "",
-    city: "Jodhpur",
-    pincode: "",
-    contact: "",
-    preferredDate: "",
-    notes: "",
-    image: null,
-  });
+const API_URL = "http://localhost:3000";
+
+const INITIAL_FORM = {
+  tankType: "",
+  tankSize: "",
+  address: "",
+  city: "Jodhpur",
+  pincode: "",
+  contact: "",
+  preferredDate: "",
+  notes: "",
+  image: null,
+};
+
+function TankCleaningForm() {
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState(INITIAL_FORM);
+  const [loading, setLoading] = useState(false);
+  const [paymentStarted, setPaymentStarted] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
-    setForm({
-      ...form,
-      [name]: files ? files[0] : value,
-    });
+    setForm((prev) => ({
+      ...prev,
+      [name]: files ? files[0] || null : value,
+    }));
+  };
+
+  const resetForm = () => {
+    setForm({ ...INITIAL_FORM });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = new FormData();
+    if (loading || paymentStarted) return;
 
-    data.append("tankType", form.tankType);
-    data.append("tankSize", form.tankSize);
-    data.append("address", form.address);
-    data.append("city", form.city);
-    data.append("pincode", form.pincode);
-    data.append("contact", form.contact);
-    data.append("preferredDate", form.preferredDate);
-    data.append("notes", form.notes);
-
-    if (form.image) {
-      data.append("image", form.image);
+    if (!window.Razorpay) {
+      alert("Razorpay checkout is not loaded. Please refresh the page.");
+      return;
     }
 
+    setLoading(true);
+
     try {
-      const response = await fetch(
-        "http://localhost:3000/requests/add",
-        {
-          method: "POST",
-          credentials: "include",
-          body: data,
-        }
-      );
+      // STEP 1: Create a Razorpay order only.
+      // The backend must NOT save a request or payment document here.
+      const orderResponse = await fetch(`${API_URL}/requests/add`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          tankType: form.tankType,
+          tankSize: form.tankSize,
+        }),
+      });
 
-      const result = await response.json();
+      const orderResult = await orderResponse.json();
 
-      if (!response.ok) {
-        alert(result.message);
-        return;
+      if (!orderResponse.ok) {
+        throw new Error(
+          orderResult.message || "Could not create payment order."
+        );
       }
 
-      const { order, payment } = result.data;
+      const order = orderResult.data?.order;
 
+      if (!order?.orderId || !order?.key || !order?.amount) {
+        throw new Error("Invalid payment order received from server.");
+      }
+
+      // Razorpay's amount is already in paise.
       const options = {
         key: order.key,
-        amount: order.amount * 100,
-        currency: order.currency,
+        amount: order.amount,
+        currency: order.currency || "INR",
         name: "Tank Clean Services",
         description: "Tank Cleaning Booking",
         order_id: order.orderId,
 
-        handler: async (response) => {
-          const verify = await fetch(
-            "http://localhost:3000/payments/verify-booking",
-            {
-              method: "POST",
-              credentials: "include",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-                paymentId: payment._id,
-              }),
+        handler: async (razorpayResponse) => {
+          // Payment succeeded in checkout. Verify it on the backend
+          // before creating the booking.
+          try {
+            setLoading(true);
+
+            const bookingData = new FormData();
+
+            bookingData.append("tankType", form.tankType);
+            bookingData.append("tankSize", form.tankSize);
+            bookingData.append("address", form.address);
+            bookingData.append("city", form.city);
+            bookingData.append("pincode", form.pincode);
+            bookingData.append("contact", form.contact);
+            bookingData.append(
+              "preferredDate",
+              form.preferredDate
+            );
+            bookingData.append("notes", form.notes || "");
+
+            if (form.image) {
+              bookingData.append("image", form.image);
             }
-          );
 
-          const result = await verify.json();
+            bookingData.append(
+              "razorpay_order_id",
+              razorpayResponse.razorpay_order_id
+            );
+            bookingData.append(
+              "razorpay_payment_id",
+              razorpayResponse.razorpay_payment_id
+            );
+            bookingData.append(
+              "razorpay_signature",
+              razorpayResponse.razorpay_signature
+            );
 
-          if (result.success) { // Clear the form 
-            setForm({ 
-              tankType: "", 
-              tankSize: "", 
-              address: "", 
-              city: "Jodhpur",
-              pincode: "",
-              contact: "", 
-              preferredDate: "", 
-              notes: "", 
-              image: null, 
-            }); 
-            
-            // Go to success page 
-            navigate("/"); 
-          } else { // Remain on this page 
-                     alert("Payment verification failed"); 
+            const verifyResponse = await fetch(
+              `${API_URL}/payments/verify-booking`,
+              {
+                method: "POST",
+                credentials: "include",
+                body: bookingData,
+              }
+            );
+
+            const verifyResult = await verifyResponse.json();
+
+            if (!verifyResponse.ok || !verifyResult.success) {
+              throw new Error(
+                verifyResult.message ||
+                  "Payment verification failed. Your booking has not been confirmed."
+              );
+            }
+
+            alert("Payment successful! Your booking is confirmed.");
+
+            resetForm();
+            navigate("/");
+          } catch (error) {
+            console.error("Booking verification error:", error);
+
+            alert(
+              error.message ||
+                "We could not confirm your booking. If money was deducted, contact support with your payment ID: " +
+                  razorpayResponse.razorpay_payment_id
+            );
+          } finally {
+            setLoading(false);
+            setPaymentStarted(false);
           }
+        },
+
+        modal: {
+          ondismiss: () => {
+            // Do not call the booking creation endpoint on cancellation.
+            setLoading(false);
+            setPaymentStarted(false);
+            alert(
+              "Payment was cancelled. No booking request was submitted."
+            );
+          },
+        },
+
+        theme: {
+          color: "#2563eb",
         },
       };
 
       const razorpay = new window.Razorpay(options);
 
+      razorpay.on("payment.failed", (response) => {
+        console.error("Razorpay payment failed:", response.error);
+
+        setLoading(false);
+        setPaymentStarted(false);
+
+        alert(
+          response.error?.description ||
+            "Payment failed. Please try again."
+        );
+      });
+
+      setPaymentStarted(true);
+      setLoading(false);
       razorpay.open();
-
-      
-
     } catch (error) {
-      console.log(error);
-      alert("Something went wrong");
+      console.error("Checkout error:", error);
+
+      alert(error.message || "Something went wrong. Please try again.");
+
+      setLoading(false);
+      setPaymentStarted(false);
     }
   };
 
- 
-
-return (
-  <div className="min-h-screen bg-slate-100 px-4 py-10">
-    <div className="mx-auto max-w-2xl">
-
-      {/* Header */}
-      <div className="mb-6 text-center">
-        
-
-        <h1 className="text-3xl font-bold text-slate-800">
-          Tank Cleaning Service
-        </h1>
-
-        
-      </div>
-
-      {/* Form Card */}
-      <div className="overflow-hidden rounded-2xl bg-white shadow-lg">
-
-        {/* Card Header */}
-        <div className="bg-blue-600 px-6 py-5 text-white">
-          <h2 className="text-xl font-semibold">
-            Booking Details
-          </h2>
-
-          <p className="mt-1 text-sm text-blue-100">
-            Enter your tank and contact information
+  return (
+    <div className="min-h-screen bg-slate-100 px-4 py-10">
+      <div className="mx-auto max-w-2xl">
+        <div className="mb-6 text-center">
+          <h1 className="text-3xl font-bold text-slate-800">
+            Tank Cleaning Service
+          </h1>
+          <p className="mt-2 text-slate-500">
+            Book a professional tank cleaning service
           </p>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-5 p-6 sm:p-8"
-        >
-
-          {/* Tank Type & Size */}
-          <div className="grid gap-5 sm:grid-cols-2">
-
-            {/* Tank Type */}
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
-                Tank Type
-              </label>
-
-              <select
-                name="tankType"
-                value={form.tankType}
-                onChange={handleChange}
-                required
-                className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-700 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              >
-                <option value="">Select tank type</option>
-                <option value="Water Tank">Water Tank</option>
-                <option value="Overhead Tank">Overhead Tank</option>
-                <option value="Underground Tank">Underground Tank</option>
-                <option value="Septic Tank">Septic Tank</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            {/* Tank Size */}
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
-                Tank Size
-              </label>
-
-              <select
-                name="tankSize"
-                value={form.tankSize}
-                onChange={handleChange}
-                required
-                className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-700 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              >
-                <option value="">Select tank size</option>
-                <option value="Small">Small</option>
-                <option value="Medium">Medium</option>
-                <option value="Large">Large</option>
-                <option value="Extra Large">Extra Large</option>
-              </select>
-            </div>
-
+        <div className="overflow-hidden rounded-2xl bg-white shadow-lg">
+          <div className="bg-blue-600 px-6 py-5 text-white">
+            <h2 className="text-xl font-semibold">
+              Booking Details
+            </h2>
+            <p className="mt-1 text-sm text-blue-100">
+              Enter your tank and contact information
+            </p>
           </div>
 
-          {/* Address */}
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-              Service Address
-            </label>
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-5 p-6 sm:p-8"
+          >
+            {/* Tank Type and Size */}
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="tankType"
+                  className="mb-2 block text-sm font-semibold text-slate-700"
+                >
+                  Tank Type
+                </label>
 
-            <textarea
-              name="address"
-              value={form.address}
-              onChange={handleChange}
-              required
-              rows="3"
-              placeholder="Enter the complete address where the tank is located"
-              className="w-full resize-none rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-            />
-          </div>
-
-          {/* Service City & PIN Code */}
-          <div className="grid gap-5 sm:grid-cols-2">
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
-                Service City
-              </label>
-              <input
-                type="text"
-                name="city"
-                value={form.city}
-                readOnly
-                className="w-full rounded-lg border border-slate-300 bg-slate-100 px-4 py-3 text-slate-700"
-              />
-              <p className="mt-1 text-xs text-slate-500">
-                We currently serve selected areas of Jodhpur only.
-              </p>
-            </div>
-
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
-                PIN Code
-              </label>
-              <input
-                type="text"
-                name="pincode"
-                value={form.pincode}
-                onChange={handleChange}
-                inputMode="numeric"
-                pattern="[0-9]{6}"
-                maxLength={6}
-                required
-                placeholder="Enter 6-digit PIN code"
-                className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              />
-            </div>
-          </div>
-
-          {/* Contact & Date */}
-          <div className="grid gap-5 sm:grid-cols-2">
-
-            {/* Contact */}
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
-                Contact Number
-              </label>
-
-              <input
-                type="tel"
-                name="contact"
-                value={form.contact}
-                onChange={handleChange}
-                required
-                placeholder="Enter phone number"
-                className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              />
-            </div>
-
-            {/* Date */}
-            <div>
-              <label className="mb-2 block text-sm font-semibold text-slate-700">
-                Preferred Date
-              </label>
-
-              <input
-                type="date"
-                name="preferredDate"
-                value={form.preferredDate}
-                onChange={handleChange}
-                required
-                className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              />
-            </div>
-
-          </div>
-
-          {/* Notes */}
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-              Additional Notes
-              <span className="ml-2 font-normal text-slate-400">
-                (Optional)
-              </span>
-            </label>
-
-            <textarea
-              name="notes"
-              value={form.notes}
-              onChange={handleChange}
-              rows="3"
-              placeholder="Any special instructions or information..."
-              className="w-full resize-none rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-            />
-          </div>
-
-          {/* Image */}
-          <div>
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-              Tank Image
-              <span className="ml-2 font-normal text-slate-400">
-                (Optional)
-              </span>
-            </label>
-
-            <div className="rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 p-5 text-center transition hover:border-blue-400 hover:bg-blue-50">
-              <div className="mb-2 text-2xl">
-                📷
+                <select
+                  id="tankType"
+                  name="tankType"
+                  value={form.tankType}
+                  onChange={handleChange}
+                  required
+                  disabled={loading || paymentStarted}
+                  className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-700 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                >
+                  <option value="">Select tank type</option>
+                  <option value="Water Tank">Water Tank</option>
+                  <option value="Overhead Tank">Overhead Tank</option>
+                  <option value="Underground Tank">
+                    Underground Tank
+                  </option>
+                  <option value="Septic Tank">Septic Tank</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
 
-              <p className="mb-2 text-sm text-slate-500">
-                Upload a photo of your tank
-              </p>
+              <div>
+                <label
+                  htmlFor="tankSize"
+                  className="mb-2 block text-sm font-semibold text-slate-700"
+                >
+                  Tank Size
+                </label>
 
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
+                <select
+                  id="tankSize"
+                  name="tankSize"
+                  value={form.tankSize}
+                  onChange={handleChange}
+                  required
+                  disabled={loading || paymentStarted}
+                  className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-700 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                >
+                  <option value="">Select tank size</option>
+                  <option value="Small">Small</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Large">Large</option>
+                  <option value="Extra Large">Extra Large</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Service Address */}
+            <div>
+              <label
+                htmlFor="address"
+                className="mb-2 block text-sm font-semibold text-slate-700"
+              >
+                Service Address
+              </label>
+
+              <textarea
+                id="address"
+                name="address"
+                value={form.address}
                 onChange={handleChange}
-                className="mx-auto block w-full max-w-xs text-sm text-slate-500 file:mr-3 file:rounded-md file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-medium file:text-white hover:file:bg-blue-700"
+                required
+                rows={3}
+                disabled={loading || paymentStarted}
+                placeholder="Enter the complete address where the tank is located"
+                className="w-full resize-none rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
               />
             </div>
-          </div>
 
-          {/* Booking Fee */}
-          <div className="flex items-center justify-between rounded-lg border border-blue-100 bg-blue-50 px-5 py-4">
-            <div>
-              <p className="font-semibold text-slate-700">
-                Booking Fee
-              </p>
+            {/* City and PIN Code */}
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="city"
+                  className="mb-2 block text-sm font-semibold text-slate-700"
+                >
+                  Service City
+                </label>
 
-              <p className="text-xs text-slate-500">
-                Pay securely through Razorpay
-              </p>
+                <input
+                  id="city"
+                  type="text"
+                  name="city"
+                  value={form.city}
+                  readOnly
+                  className="w-full rounded-lg border border-slate-300 bg-slate-100 px-4 py-3 text-slate-700"
+                />
+
+                <p className="mt-1 text-xs text-slate-500">
+                  We currently serve selected areas of Jodhpur only.
+                </p>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="pincode"
+                  className="mb-2 block text-sm font-semibold text-slate-700"
+                >
+                  PIN Code
+                </label>
+
+                <input
+                  id="pincode"
+                  type="text"
+                  name="pincode"
+                  value={form.pincode}
+                  onChange={handleChange}
+                  inputMode="numeric"
+                  pattern="[0-9]{6}"
+                  maxLength={6}
+                  required
+                  disabled={loading || paymentStarted}
+                  placeholder="Enter 6-digit PIN code"
+                  className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                />
+              </div>
             </div>
 
-            <span className="text-xl font-bold text-blue-600">
-              ₹200
-            </span>
-          </div>
+            {/* Contact and Preferred Date */}
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="contact"
+                  className="mb-2 block text-sm font-semibold text-slate-700"
+                >
+                  Contact Number
+                </label>
 
-          {/* Submit */}
-          <button
-            type="submit"
-            className="w-full rounded-lg bg-blue-600 py-3.5 font-semibold text-white shadow-sm transition hover:bg-blue-700 hover:shadow-md active:scale-[0.99]"
-          >
-            Book Tank Cleaning
-          </button>
+                <input
+                  id="contact"
+                  type="tel"
+                  name="contact"
+                  value={form.contact}
+                  onChange={handleChange}
+                  required
+                  disabled={loading || paymentStarted}
+                  placeholder="Enter phone number"
+                  className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                />
+              </div>
 
-          <p className="text-center text-xs text-slate-400">
-            Your booking will proceed to secure payment after submission.
-          </p>
+              <div>
+                <label
+                  htmlFor="preferredDate"
+                  className="mb-2 block text-sm font-semibold text-slate-700"
+                >
+                  Preferred Date
+                </label>
 
-        </form>
+                <input
+                  id="preferredDate"
+                  type="date"
+                  name="preferredDate"
+                  value={form.preferredDate}
+                  onChange={handleChange}
+                  min={new Date().toISOString().split("T")[0]}
+                  required
+                  disabled={loading || paymentStarted}
+                  className="w-full rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+                />
+              </div>
+            </div>
+
+            {/* Additional Notes */}
+            <div>
+              <label
+                htmlFor="notes"
+                className="mb-2 block text-sm font-semibold text-slate-700"
+              >
+                Additional Notes
+                <span className="ml-2 font-normal text-slate-400">
+                  (Optional)
+                </span>
+              </label>
+
+              <textarea
+                id="notes"
+                name="notes"
+                value={form.notes}
+                onChange={handleChange}
+                rows={3}
+                disabled={loading || paymentStarted}
+                placeholder="Any special instructions or information..."
+                className="w-full resize-none rounded-lg border border-slate-300 px-4 py-3 text-slate-700 outline-none placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+              />
+            </div>
+
+            {/* Optional Tank Image */}
+            <div>
+              <label
+                htmlFor="image"
+                className="mb-2 block text-sm font-semibold text-slate-700"
+              >
+                Tank Image
+                <span className="ml-2 font-normal text-slate-400">
+                  (Optional)
+                </span>
+              </label>
+
+              <div className="rounded-lg border-2 border-dashed border-slate-300 bg-slate-50 p-5 text-center">
+                <div className="mb-2 text-2xl">📷</div>
+
+                <p className="mb-3 text-sm text-slate-500">
+                  Upload a photo of your tank
+                </p>
+
+                <input
+                  id="image"
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleChange}
+                  disabled={loading || paymentStarted}
+                  className="mx-auto block w-full max-w-xs text-sm text-slate-500 file:mr-3 file:rounded-md file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:font-medium file:text-white hover:file:bg-blue-700"
+                />
+
+                {form.image && (
+                  <p className="mt-2 text-xs text-slate-500">
+                    Selected: {form.image.name}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Booking Fee */}
+            <div className="flex items-center justify-between rounded-lg border border-blue-100 bg-blue-50 px-5 py-4">
+              <div>
+                <p className="font-semibold text-slate-700">
+                  Booking Fee
+                </p>
+                <p className="text-xs text-slate-500">
+                  Pay securely through Razorpay
+                </p>
+              </div>
+
+              <span className="text-xl font-bold text-blue-600">
+                ₹200
+              </span>
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={loading || paymentStarted}
+              className="w-full rounded-lg bg-blue-600 py-3.5 font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {loading
+                ? "Please wait..."
+                : paymentStarted
+                  ? "Payment in progress..."
+                  : "Pay ₹200 and Book"}
+            </button>
+
+            <p className="text-center text-xs text-slate-400">
+              Your booking is saved only after the server verifies your
+              payment.
+            </p>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-);
-
-
-
-};
+  );
+}
 
 export default TankCleaningForm;
+
+
+
 
