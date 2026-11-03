@@ -1,32 +1,10 @@
-
 import crypto from "crypto";
 import Razorpay from "razorpay";
-
-import {
-  RAZORPAY_API_KEY,
-  RAZORPAY_API_SECRET,
-} from "../config/serverConfig.js";
-
-import {
-  Booking_fee,
-  getPrice,
-} from "../config/pricingConfig.js";
-
+import {RAZORPAY_API_KEY,RAZORPAY_API_SECRET} from "../config/serverConfig.js";
+import { Booking_fee, getPrice } from "../config/pricingConfig.js";
 import SERVICE_AREA from "../config/serviceAreaConfig.js";
-
-import {
-  createPaymentRepo,
-  getPaymentByIdRepo,
-  getPaymentByReqRepo,
-  getPaymentByRazorPayOrderIDRepo,
-  updatePaymentByIdRepo,
-} from "../repository/paymentRepo.js";
-
-import {
-  createReqRepo,
-  linkPaymentToReqRepo,
-} from "../repository/requestRepo.js";
-
+import {createPaymentRepo,getPaymentByIdRepo,getPaymentByReqRepo,getPaymentByRazorPayOrderIDRepo,updatePaymentByIdRepo} from "../repository/paymentRepo.js";
+import {createReqRepo,linkPaymentToReqRepo} from "../repository/requestRepo.js";
 import request from "../schema/requestSchema.js";
 import Payment from "../schema/paymentSchema.js";
 
@@ -47,25 +25,20 @@ export const createRazorpayOrder = async ({ amount, receipt }) => {
 
 // Verify payment, validate service area, then create booking.
 export const verifyBookingPaymentService = async (data) => {
-  const {
-    razorpay_order_id,
-    razorpay_payment_id,
-    razorpay_signature,
-    userId,
-    form,
+  const {razorpay_order_id,razorpay_payment_id,razorpay_signature,userId,form,
     image,
   } = data;
 
   // 1. Validate the submitted service PIN code.
-const pincode = String(form?.pincode || "").trim();
+  const pincode = String(form?.pincode || "").trim();
 
-if (!pincode) {
-  throw new Error("Please select your service PIN code.");
-}
+  if (!pincode) {
+    throw new Error("Please select your service PIN code.");
+  }
 
-if (!SERVICE_AREA.supportedPincodes.includes(pincode)) {
-  throw new Error("We do not currently serve this PIN code.");
-}
+  if (!SERVICE_AREA.supportedPincodes.includes(pincode)) {
+    throw new Error("We do not currently serve this PIN code.");
+  }
 
   // 2. Validate required booking details.
   if (
@@ -84,23 +57,14 @@ if (!SERVICE_AREA.supportedPincodes.includes(pincode)) {
   }
 
   // 3. Verify the Razorpay payment signature.
+
   const expectedSignature = crypto
     .createHmac("sha256", RAZORPAY_API_SECRET)
     .update(`${razorpay_order_id}|${razorpay_payment_id}`)
     .digest("hex");
 
-  const signatureBuffer = Buffer.from(expectedSignature, "hex");
-  const receivedBuffer = Buffer.from(
-    razorpay_signature || "",
-    "hex"
-  );
-
-  if (
-    !receivedBuffer.length ||
-    receivedBuffer.length !== signatureBuffer.length ||
-    !crypto.timingSafeEqual(signatureBuffer, receivedBuffer)
-  ) {
-    throw new Error("Payment verification failed");
+  if (expectedSignature !== razorpay_signature) {
+    throw new Error("Payment verification failed.");
   }
 
   // 4. Verify the order with Razorpay.
@@ -115,9 +79,7 @@ if (!SERVICE_AREA.supportedPincodes.includes(pincode)) {
   }
 
   // 5. Verify the payment itself.
-  const razorpayPayment = await razorpay.payments.fetch(
-    razorpay_payment_id
-  );
+  const razorpayPayment = await razorpay.payments.fetch(razorpay_payment_id);
 
   if (
     razorpayPayment.order_id !== razorpay_order_id ||
@@ -128,9 +90,8 @@ if (!SERVICE_AREA.supportedPincodes.includes(pincode)) {
   }
 
   // 6. Prevent duplicate processing of the same order.
-  const existingPayment = await getPaymentByRazorPayOrderIDRepo(
-    razorpay_order_id
-  );
+  const existingPayment =
+    await getPaymentByRazorPayOrderIDRepo(razorpay_order_id);
 
   if (existingPayment) {
     throw new Error("This payment order has already been processed");
@@ -190,10 +151,7 @@ export const getPaymentByReqService = async (reqId) => {
   return payment;
 };
 
-export const cancelBookingPaymentService = async ({
-  paymentId,
-  userId,
-}) => {
+export const cancelBookingPaymentService = async ({ paymentId, userId }) => {
   if (!paymentId) {
     throw new Error("Payment ID is required");
   }

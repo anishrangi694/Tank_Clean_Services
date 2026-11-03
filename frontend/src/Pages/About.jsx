@@ -10,7 +10,6 @@ function About() {
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-orange-950 px-6 py-14 md:py-20">
         {/* Background Decorations */}
         <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-orange-500/20 blur-3xl" />
-
         <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-orange-400/10 blur-3xl" />
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-2 md:gap-10">

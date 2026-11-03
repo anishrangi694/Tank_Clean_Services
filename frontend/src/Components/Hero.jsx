@@ -42,8 +42,7 @@ function Hero() {
                 src={hero}
                 alt="Professional tank cleaning"
                 className="w-full h-full object-cover rounded-tr-full rounded-bl-full
-        transition-transform duration-700 ease-in-out
-        hover:scale-105"
+                           transition-transform duration-700 ease-in-out hover:scale-105"
               />
             </div>
           </div>

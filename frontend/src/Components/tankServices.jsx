@@ -63,10 +63,8 @@ function TankService() {
               <div
                 key={index}
                 className="group bg-white rounded-xl overflow-hidden shadow-md
-          cursor-pointer
-          transition-all duration-500 ease-in-out
-          hover:-translate-y-3 hover:scale-[1.03]
-          hover:shadow-2xl"
+                           cursor-pointer transition-all duration-500 ease-in-out
+                           hover:-translate-y-3 hover:scale-[1.03] hover:shadow-2xl"
               >
                 {/* Image */}
                 <div className="overflow-hidden relative">

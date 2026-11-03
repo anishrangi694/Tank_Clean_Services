@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -60,6 +59,8 @@ function TankCleaningForm() {
         body: JSON.stringify({
           tankType: form.tankType,
           tankSize: form.tankSize,
+          city: form.city,
+          pincode: form.pincode.trim(),
         }),
       });
 
@@ -100,12 +101,8 @@ function TankCleaningForm() {
             bookingData.append("city", form.city);
             bookingData.append("pincode", form.pincode);
             bookingData.append("contact", form.contact);
-            bookingData.append(
-              "preferredDate",
-              form.preferredDate
-            );
+            bookingData.append("preferredDate",form.preferredDate);
             bookingData.append("notes", form.notes || "");
-
             if (form.image) {
               bookingData.append("image", form.image);
             }

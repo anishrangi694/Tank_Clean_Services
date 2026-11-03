@@ -20,8 +20,8 @@ function CompanyDetails() {
 
             <p
               className="text-gray-600 leading-7 mb-4
-        transition-all duration-500
-        group-hover:text-gray-800"
+                           transition-all duration-500
+                           group-hover:text-gray-800"
             >
               Tank Cleaner is a water tank cleaning service platform designed to
               make professional tank cleaning simple and convenient.
@@ -29,8 +29,8 @@ function CompanyDetails() {
 
             <p
               className="text-gray-600 leading-7
-        transition-all duration-500
-        group-hover:text-gray-800"
+                           transition-all duration-500
+                         group-hover:text-gray-800"
             >
               We help customers book tank cleaning services without the hassle
               of searching for service providers manually. Our goal is to make

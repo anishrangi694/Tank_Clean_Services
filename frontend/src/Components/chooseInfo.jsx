@@ -10,8 +10,8 @@ function ChooseInfo() {
           {/* Section Heading */}
           <h2
             className="text-3xl font-bold text-center text-gray-800 mb-12
-      transition-all duration-500 ease-in-out
-      hover:text-orange-500 hover:scale-105"
+                       transition-all duration-500 ease-in-out
+                       hover:text-orange-500 hover:scale-105"
           >
             Why Choose Tank Cleaner?
           </h2>
@@ -20,10 +20,8 @@ function ChooseInfo() {
             {/* Card 1 */}
             <div
               className="group text-center p-6 rounded-xl bg-gray-50 border border-transparent
-        shadow-sm cursor-pointer
-        transition-all duration-500 ease-in-out
-        hover:-translate-y-3 hover:scale-[1.03]
-        hover:bg-white hover:border-orange-200 hover:shadow-2xl"
+                         shadow-sm cursor-pointer transition-all duration-500 ease-in-out
+                         hover:-translate-y-3 hover:scale-[1.03] hover:bg-white hover:border-orange-200 hover:shadow-2xl"
             >
               <div className="flex mb-4 justify-center">
                 <img

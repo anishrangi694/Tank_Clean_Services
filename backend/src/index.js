@@ -29,5 +29,4 @@ app.use('/payments',paymentRouter);
 app.listen(PORT,()=>{
     connectDB();
     console.log(`server started at port ${PORT}`);
-    
 });

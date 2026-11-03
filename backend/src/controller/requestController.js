@@ -1,20 +1,14 @@
 import { createReqService, getMyReqService, getReqService, getRequestsService, updateStatusService } from "../service/requestService.js";
 
+
 export const createRequest = async (req, res) => {
   try {
-    const imageUrl = req.file?.path;
-
     const response = await createReqService({
       user: req.user.id,
       tankType: req.body.tankType,
       tankSize: req.body.tankSize,
-      address: req.body.address,
       city: req.body.city,
       pincode: req.body.pincode,
-      contact: req.body.contact,
-      preferredDate: req.body.preferredDate,
-      notes: req.body.notes,
-      image: imageUrl,
     });
 
     return res.status(201).json({
@@ -34,6 +28,7 @@ export const createRequest = async (req, res) => {
     });
   }
 };
+
 
 export const getMyRequest= async (req,res)=>{
     try{

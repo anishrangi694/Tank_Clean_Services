@@ -1,9 +1,4 @@
-
-import {
-  getPaymentByReqService,
-  verifyBookingPaymentService,
-  cancelBookingPaymentService,
-} from "../service/paymentService.js";
+import {getPaymentByReqService,verifyBookingPaymentService,cancelBookingPaymentService} from "../service/paymentService.js";
 
 export const verifyBookingPayment = async (req, res) => {
   try {

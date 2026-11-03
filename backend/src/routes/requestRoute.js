@@ -15,6 +15,6 @@ reqRouter.get('/',isLoggedIn,isAdmin, getRequests);
 reqRouter.put('/:id/status',isLoggedIn,isAdmin,updateRequests);
 
 // //for both
-reqRouter.get('/:id',isLoggedIn, getRequest)
+reqRouter.get('/:id',isLoggedIn, getRequest);
 
 export default reqRouter;
