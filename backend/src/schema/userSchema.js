@@ -37,12 +37,24 @@ const userSchema= new mongoose.Schema({
         type:String,
         enum:["User","Admin"],
         default:"User"
+    },
+
+    resetPasswordToken:{
+        type:String,
+        select:false
+    },
+
+    resetPasswordExpires:{
+        type:Date,
+        select:false
     }
 },{
     timestamps:true
 });
 
 userSchema.pre('save',async function (){
+    // hash for new users, or when the password was changed; skip otherwise
+    if(!this.isNew && !this.isModified('password')) return;
     const hashedPassword= await bcrypt.hash(this.password,10);
     this.password=hashedPassword;
 })

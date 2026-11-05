@@ -47,11 +47,11 @@ const AdminHome = () => {
   ).length;
 
   return (
-    <div className="p-6 md:p-8">
+    <div className="p-4 sm:p-6 lg:p-8">
 
       {/* Heading */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-800">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
           Dashboard
         </h1>
 
@@ -68,10 +68,10 @@ const AdminHome = () => {
       ) : (
         <>
           {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+          <div className="grid grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-5 mb-6 sm:mb-8">
 
             {/* Total */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+            <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 shadow-sm">
               <p className="text-sm text-gray-500">
                 Total Requests
               </p>
@@ -86,7 +86,7 @@ const AdminHome = () => {
             </div>
 
             {/* Pending */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+            <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 shadow-sm">
               <p className="text-sm text-gray-500">
                 Pending
               </p>
@@ -101,7 +101,7 @@ const AdminHome = () => {
             </div>
 
             {/* Confirmed */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+            <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 shadow-sm">
               <p className="text-sm text-gray-500">
                 Confirmed
               </p>
@@ -116,7 +116,7 @@ const AdminHome = () => {
             </div>
 
             {/* Completed */}
-            <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+            <div className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 shadow-sm">
               <p className="text-sm text-gray-500">
                 Completed
               </p>
@@ -135,7 +135,7 @@ const AdminHome = () => {
           {/* Recent Requests */}
           <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
 
-            <div className="px-6 py-5 border-b border-gray-100">
+            <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-gray-100">
               <h2 className="text-lg font-semibold text-gray-800">
                 Recent Requests
               </h2>
@@ -146,23 +146,23 @@ const AdminHome = () => {
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[480px]">
 
                 <thead>
                   <tr className="bg-gray-50 text-left">
-                    <th className="px-6 py-3 text-xs font-semibold text-gray-500">
+                    <th className="px-3 sm:px-6 py-3 text-xs font-semibold text-gray-500">
                       Customer
                     </th>
 
-                    <th className="px-6 py-3 text-xs font-semibold text-gray-500">
+                    <th className="px-3 sm:px-6 py-3 text-xs font-semibold text-gray-500">
                       Tank Type
                     </th>
 
-                    <th className="px-6 py-3 text-xs font-semibold text-gray-500">
+                    <th className="px-3 sm:px-6 py-3 text-xs font-semibold text-gray-500">
                       Date
                     </th>
 
-                    <th className="px-6 py-3 text-xs font-semibold text-gray-500">
+                    <th className="px-3 sm:px-6 py-3 text-xs font-semibold text-gray-500">
                       Status
                     </th>
                   </tr>
@@ -174,21 +174,21 @@ const AdminHome = () => {
                       key={request._id}
                       className="border-t border-gray-100"
                     >
-                      <td className="px-6 py-4 text-sm text-gray-700">
+                      <td className="px-3 sm:px-6 py-3 sm:py-4 text-sm text-gray-700">
                         {request.user?.name || "Unknown"}
                       </td>
 
-                      <td className="px-6 py-4 text-sm text-gray-600">
+                      <td className="px-3 sm:px-6 py-3 sm:py-4 text-sm text-gray-600">
                         {request.tankType}
                       </td>
 
-                      <td className="px-6 py-4 text-sm text-gray-600">
+                      <td className="px-3 sm:px-6 py-3 sm:py-4 text-sm text-gray-600">
                          {new Date(request.preferredDate).toLocaleDateString("en-IN")}
                       </td>
 
-                      <td className="px-6 py-4">
+                      <td className="px-3 sm:px-6 py-3 sm:py-4">
                         <span
-                          className={`px-3 py-1 text-xs font-medium rounded-full ${
+                          className={`px-2.5 sm:px-3 py-1 text-xs font-medium rounded-full whitespace-nowrap ${
                             request.status === "Pending"
                               ? "bg-orange-50 text-orange-600"
                               : request.status === "Completed"

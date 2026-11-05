@@ -2,6 +2,7 @@ import {Booking_fee, getPrice } from "../config/pricingConfig.js";
 import { RAZORPAY_API_KEY } from "../config/serverConfig.js";
 import { createRazorpayOrder } from "./paymentService.js";
 import {getMyReqRepo,getRequestRepo,getRequestsRepo,updateStatusRepo} from "../repository/requestRepo.js";
+import { sendRequestStatusEmail } from "./notificationService.js";
 
 // Create Razorpay order only.
 // Do not save the request or payment in MongoDB here.
@@ -36,7 +37,15 @@ export const getRequestsService = async () => {
 };
 
 export const updateStatusService = async (reqId, updates) => {
-  return await updateStatusRepo(reqId, updates);
+  const oldRequest = await getRequestRepo(reqId);
+  const updatedRequest = await updateStatusRepo(reqId, updates);
+
+  // email the customer only when the status really changed
+  if (updatedRequest && oldRequest && updatedRequest.status !== oldRequest.status) {
+    sendRequestStatusEmail(updatedRequest);
+  }
+
+  return updatedRequest;
 };
 
 export const getReqService = async (reqId) => {

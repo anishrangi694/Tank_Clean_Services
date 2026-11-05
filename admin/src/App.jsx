@@ -1,4 +1,5 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import AdminSideBar from "./components/AdminSideBar";
@@ -9,65 +10,57 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRequests from "./Pages/AdminRequests";
 
 function App() {
+  // Controls the mobile / tablet slide-in sidebar
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+
+  // Close the drawer whenever the route changes
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
+
+  // Lock body scroll while the drawer is open (mobile only matters)
+  useEffect(() => {
+    document.body.style.overflow = sidebarOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [sidebarOpen]);
+
+  // Shared layout: sidebar (drawer on small screens) + scrollable content
+  const withLayout = (page) => (
+    <ProtectedRoute>
+      <AdminSideBar
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
+
+      <main className="min-h-screen bg-gray-50 pt-16 md:pt-[90px] lg:pl-64">
+        {page}
+      </main>
+    </ProtectedRoute>
+  );
+
   return (
     <>
       {/* Navbar is always visible */}
-      <Navbar />
+      <Navbar
+        sidebarOpen={sidebarOpen}
+        onMenuClick={() => setSidebarOpen((prev) => !prev)}
+      />
 
       <Routes>
+        <Route path="/login" element={<AdminLogin />} />
 
-        {/* Login */}
-        <Route
-          path="/login"
-          element={<AdminLogin />}
-        />
+        <Route path="/" element={withLayout(<AdminHome />)} />
 
-        {/* Dashboard */}
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <div className="h-screen overflow-hidden">
-
-                <AdminSideBar />
-
-                <main className="fixed top-[90px] left-64 right-0 bottom-0 overflow-y-auto bg-gray-50">
-                  <AdminHome />
-                </main>
-
-              </div>
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Requests */}
-        <Route
-          path="/requests"
-          element={
-            <ProtectedRoute>
-              <div className="h-screen overflow-hidden">
-
-                <AdminSideBar />
-
-                <main className="fixed top-[90px] left-64 right-0 bottom-0 overflow-y-auto bg-gray-50">
-                  <AdminRequests />
-                </main>
-
-              </div>
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/requests" element={withLayout(<AdminRequests />)} />
 
         {/* Wrong URL */}
-        <Route
-          path="*"
-          element={<Navigate to="/login" replace />}
-        />
-
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </>
   );
 }
 
 export default App;
-

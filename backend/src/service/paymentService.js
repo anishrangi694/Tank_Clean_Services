@@ -7,6 +7,7 @@ import {createPaymentRepo,getPaymentByIdRepo,getPaymentByReqRepo,getPaymentByRaz
 import {createReqRepo,linkPaymentToReqRepo} from "../repository/requestRepo.js";
 import request from "../schema/requestSchema.js";
 import Payment from "../schema/paymentSchema.js";
+import { sendRequestStatusEmail } from "./notificationService.js";
 
 const razorpay = new Razorpay({
   key_id: RAZORPAY_API_KEY,
@@ -130,6 +131,9 @@ export const verifyBookingPaymentService = async (data) => {
 
     await linkPaymentToReqRepo(newRequest._id, payment._id);
 
+    // booking confirmation email (runs in background, never blocks the response)
+    sendRequestStatusEmail(newRequest);
+
     return {
       request: newRequest,
       payment,
@@ -194,4 +198,4 @@ export const cancelBookingPaymentService = async ({ paymentId, userId }) => {
     paymentStatus: "Cancelled",
     requestStatus: requestData?.status,
   };
-};
+}

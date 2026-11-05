@@ -12,6 +12,8 @@ import ScrollToTop from "./Components/scrollToTop";
 import Dashboard from "./Pages/dashboard";
 import Register from "./Pages/register";
 import EquipmentChemicals from "./Pages/EquipmentChemicals";
+import ForgotPassword from "./Pages/forgotPassword";
+import ResetPassword from "./Pages/resetPassword";
 
 function App() {
   const location = useLocation();
@@ -19,6 +21,8 @@ function App() {
   const hideFooter =
     location.pathname === "/login" ||
     location.pathname === "/register" ||
+    location.pathname === "/forgot-password" ||
+    location.pathname.startsWith("/reset-password") ||
     location.pathname ==='dashboard';
 
   return (
@@ -37,6 +41,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path="/equipment-chemicals" element={<EquipmentChemicals />}/>
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Routes>
 
       {!hideFooter && <Footer />}

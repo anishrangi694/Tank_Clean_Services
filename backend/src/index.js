@@ -6,6 +6,7 @@ import userRouter from './routes/userRoute.js';
 import cookieParser from 'cookie-parser';
 import reqRouter from './routes/requestRoute.js';
 import paymentRouter from './routes/paymentRoute.js';
+import statsRouter from './routes/statsRoute.js';
 
 const app= express();
 
@@ -25,6 +26,7 @@ app.use(cookieParser())
 app.use('/users',userRouter);
 app.use('/requests',reqRouter);
 app.use('/payments',paymentRouter);
+app.use('/stats',statsRouter);
 
 app.listen(PORT,()=>{
     connectDB();

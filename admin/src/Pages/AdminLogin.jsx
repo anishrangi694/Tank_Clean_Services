@@ -39,9 +39,9 @@ function AdminLogin() {
   };
 
   return (
-    <div className="min-h-[90%] mt-[100px] flex items-center justify-center bg-gray-50 px-4 ">
-      <div className="w-full max-w-md rounded-xl bg-white p-8 shadow-lg mt-16">
-        <h1 className="mb-6 text-center text-3xl font-bold text-gray-800">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 pt-20 pb-8 md:pt-[110px]">
+      <div className="w-full max-w-md rounded-xl bg-white p-5 sm:p-8 shadow-lg">
+        <h1 className="mb-6 text-center text-2xl sm:text-3xl font-bold text-gray-800">
           Login
         </h1>
 

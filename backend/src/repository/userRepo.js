@@ -17,3 +17,21 @@ export const addUserRepo= async (userDetails)=>{
         console.log("user not created at repo layer",error);
     }
 }
+
+export const saveResetTokenRepo= async (userId, hashedToken, expires)=>{
+    return await User.updateOne(
+        {_id:userId},
+        {$set:{resetPasswordToken:hashedToken, resetPasswordExpires:expires}}
+    );
+}
+
+export const findUserByResetTokenRepo= async (hashedToken)=>{
+    return await User.findOne({
+        resetPasswordToken:hashedToken,
+        resetPasswordExpires:{$gt:Date.now()}
+    }).select('+resetPasswordToken +resetPasswordExpires');
+}
+
+export const findUserByIdRepo= async (id)=>{
+    return await User.findById(id);
+}

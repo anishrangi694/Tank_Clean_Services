@@ -1,4 +1,4 @@
-import { addUser, getUserDetails, loginUserService } from "../service/userService.js"
+import { addUser, getUserDetails, loginUserService, forgotPasswordService, resetPasswordService } from "../service/userService.js"
 
 export const registerUser= async (req,res)=>{
     try{
@@ -81,6 +81,48 @@ export const getUser= async(req,res)=>{
     }catch(error){
         res.status(401).json({
             message:"user profile not fetched",
+            data:{},
+            error:error,
+            success:false
+        })
+    }
+}
+
+export const forgotPassword= async (req,res)=>{
+    try{
+        await forgotPasswordService(req.body.email);
+
+        // same response whether or not the email exists
+        res.status(200).json({
+            message:"If an account with that email exists, a reset link has been sent",
+            data:{},
+            error:{},
+            success:true
+        })
+    }catch(error){
+        console.log('forgot password error',error);
+        res.status(500).json({
+            message:"could not send reset email",
+            data:{},
+            error:{},
+            success:false
+        })
+    }
+}
+
+export const resetPassword= async (req,res)=>{
+    try{
+        await resetPasswordService(req.params.token, req.body.password);
+
+        res.status(200).json({
+            message:"password reset successfully",
+            data:{},
+            error:{},
+            success:true
+        })
+    }catch(error){
+        res.status(400).json({
+            message:Array.isArray(error)?error[0]:"password not reset",
             data:{},
             error:error,
             success:false
