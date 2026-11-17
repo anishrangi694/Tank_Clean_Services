@@ -38,6 +38,12 @@ export const getRequestsService = async () => {
 
 export const updateStatusService = async (reqId, updates) => {
   const oldRequest = await getRequestRepo(reqId);
+
+  // start the 6-month service cycle when a job is marked Completed
+  if (updates.status === "Completed" && oldRequest?.status !== "Completed") {
+    updates = { ...updates, completedAt: new Date(), serviceDueNotifiedAt: null, serviceReminderCount: 0 };
+  }
+
   const updatedRequest = await updateStatusRepo(reqId, updates);
 
   // email the customer only when the status really changed

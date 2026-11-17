@@ -91,6 +91,24 @@ const requestSchema = new mongoose.Schema(
       ref: "Payment",
       default: null,
     },
+
+    // set when status becomes "Completed"; the 6-month service cycle starts here
+    completedAt: {
+      type: Date,
+      default: null,
+    },
+
+    // date of the LAST "service due" reminder email (15-day gap is measured from here)
+    serviceDueNotifiedAt: {
+      type: Date,
+      default: null,
+    },
+
+    // how many "service due" reminders have been sent for this cleaning
+    serviceReminderCount: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
@@ -100,3 +118,4 @@ const requestSchema = new mongoose.Schema(
 const Request = mongoose.model("Request", requestSchema);
 
 export default Request;
+

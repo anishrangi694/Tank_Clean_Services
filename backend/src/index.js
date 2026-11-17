@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import reqRouter from './routes/requestRoute.js';
 import paymentRouter from './routes/paymentRoute.js';
 import statsRouter from './routes/statsRoute.js';
+import { startServiceReminderJob } from './jobs/serviceReminderJob.js';
 
 const app= express();
 
@@ -30,5 +31,6 @@ app.use('/stats',statsRouter);
 
 app.listen(PORT,()=>{
     connectDB();
+    startServiceReminderJob();
     console.log(`server started at port ${PORT}`);
 });
