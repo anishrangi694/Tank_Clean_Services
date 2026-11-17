@@ -22,5 +22,3 @@ export const sendEmail= async ({to,subject,html,text})=>{
     await transporter.sendMail({from:MAIL_FROM,to,subject,html,text});
 }
 
-console.log('SMTP_USER:', SMTP_USER);
-console.log('SMTP_PASS length:', SMTP_PASS?.length);
